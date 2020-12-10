@@ -1,2 +1,2 @@
 # DiagonalDifference
-Matrix diagonal difference absolute value
+Matrix diagonals difference absolute value
