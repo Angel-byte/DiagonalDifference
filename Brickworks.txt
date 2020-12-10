@@ -1,0 +1,70 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Brickwork {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int[] sizes = Arrays.stream(scanner.nextLine().split("\\s+"))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        int[][] matrix = new int[sizes[0]][sizes[1]];
+
+        if (sizes[0] <= 100 && sizes[1] <= 100 && sizes[0] % 2 == 0 && sizes[1] % 2 == 0) {
+            for (int i = 0; i < sizes[0]; i++) {
+                matrix[i] = Arrays.stream(scanner.nextLine().split("\\s+"))
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
+            }
+        }
+        printMatrix(getReversedMatrix(matrix));
+    }
+
+    private static int[][] getReversedMatrix(int[][] matrix) {
+        int r;
+        int c;
+        int[][] reversed =  new int[matrix.length][matrix[0].length];
+
+        for (r = 0; r < matrix.length; r++) {
+            if (r % 2 == 0) {
+                int newCol = 0;
+                for (c = 0; c < matrix[r].length; c++) {
+                    reversed[r][newCol] = matrix[r][c];
+                    c++;
+                    newCol++;
+                }
+                int add = 0;
+                for (c = matrix[r].length / 2; c < matrix[r].length; c++) {
+                    reversed[r][c] = matrix[r + 1][add];
+                    add += 2;
+                }
+            } else {
+                int newCol = 0;
+                for (c = 0; c < matrix[r].length; c++) {
+                    reversed[r][newCol] = matrix[r-1][c];
+                    c++;
+                    newCol++;
+                }
+                int add = 0;
+                for (c = matrix[r].length / 2; c < matrix[r].length; c++) {
+                    reversed[r][c] = matrix[r][add];
+                    add += 2;
+                }
+
+            }
+        }
+        return reversed;
+    }
+
+
+    private static void printMatrix(int[][] matrix) {
+        for (int r = 0; r < matrix.length; r++) {
+            for (int c = 0; c < matrix[r].length; c++) {
+                System.out.print(matrix[r][c] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
